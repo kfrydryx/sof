@@ -38,7 +38,7 @@ main()
     # https://docs.github.com/en/rest/reference/pulls#list-commits-on-a-pull-request
     local pagelen PRlen=0
     for i in 1 2 3 4 5; do
-        curl -H 'Accept: application/vnd.github.v3+json' \
+        curl -n -H 'Accept: application/vnd.github.v3+json' \
          "https://api.github.com/repos/$gh_project/pulls/$pr_number/commits?per_page=100&page=$i" \
          > commits_"$i".json
         pagelen=$(jq length < commits_$i.json)
