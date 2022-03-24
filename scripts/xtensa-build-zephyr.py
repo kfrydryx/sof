@@ -95,6 +95,13 @@ platform_list = [
 		"XTENSA_TOOLS_VERSION": f"RI-2020.5{xtensa_tools_version_postfix}",
 		"RIMAGE_KEY": pathlib.Path("modules", "audio", "sof", "keys", "mtl_private_key.pem")
 	},
+	{
+		"name": "mtl-sim",
+		"PLAT_CONFIG": "intel_adsp_ace15_mtpm_sim",
+		"XTENSA_CORE": "ace10_LX7HiFi4_RI_2020_5",
+		"XTENSA_TOOLS_VERSION": f"RI-2020.5{xtensa_tools_version_postfix}",
+		"RIMAGE_KEY": pathlib.Path("modules", "audio", "sof", "keys", "mtl_private_key.pem")
+	},
 	# NXP platforms
 	{
 		"name": "imx8",
