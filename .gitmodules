@@ -1,3 +1,4 @@
 [submodule "rimage"]
 	path = rimage
-	url = ../rimage
+	url = https://github.com/intel-innersource/drivers.audio.firmware.rimage.git
+
