@@ -1,37 +1,34 @@
----
 # SOF west manifest
 manifest:
   version: "0.13"
 
   defaults:
-    remote: thesofproject
+    remote: innersource
 
   remotes:
     - name: thesofproject
       url-base: https://github.com/thesofproject
     - name: zephyrproject
       url-base: https://github.com/zephyrproject-rtos
+    - name: innersource
+      url-base: https://github.com/intel-innersource
 
   projects:
     - name: rimage
-      repo-path: rimage
+      repo-path: drivers.audio.firmware.rimage
       path: sof/rimage
-      revision: 542924d70c1715671ad8213440f01dc6dadb52e4
+      revision: 452847ddc04ebf865e3e03926cc3298db4b66a81
 
     - name: tomlc99
+      remote: thesofproject
       repo-path: tomlc99
       path: sof/rimage/tomlc99
       revision: e3a03f5ec7d8d33be705c5ce8a632d998ce9b4d1
 
     - name: zephyr
-      repo-path: zephyr
-      revision: 0956647aaf6bd2b1e840adcc86db503f274d84a9
-      remote: zephyrproject
-      # Import some projects listed in zephyr/west.yml@revision
-      #
-      # Warning: changes to zephyr/west.yml or to any other _imported_
-      # west.yml file are _ignored_ by design!  Only the above
-      # 'revision:' of zephyr/west.yml is used.
+      repo-path: os.rtos.zephyr.zephyr
+      path: zephyr
+      revision: cb9cd38aa919705edb586f1e82e3d5409e00cfc1
       import:
         name-whitelist:
           - hal_xtensa
@@ -40,8 +37,16 @@ manifest:
           - lz4
           - tinycrypt
 
+    - name: zephyr-intel
+      path: zephyr-intel
+      repo-path: os.rtos.zephyr.zephyr-intel
+      revision: 8ef0bdf2c420edbb56a0b5ae8db5794a741aa010
+
+    - name: hal-intel
+      repo-path: os.rtos.zephyr.modules.hal-intel
+      path: modules/hal/intel
+      revision: da7a7bc3d3ab108430f25465c84acff78a0c2195
+
   self:
     path: sof
-    # Changes to submanifests/*.yml files _are_ effective; these have no
-    # specified 'revision:'
     import: submanifests
