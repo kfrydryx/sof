@@ -17,7 +17,7 @@ manifest:
     - name: rimage
       repo-path: drivers.audio.firmware.rimage
       path: sof/rimage
-      revision: 452847ddc04ebf865e3e03926cc3298db4b66a81
+      revision: 5504179137c56948abaa77ec5c137dc8cf3c336f
 
     - name: tomlc99
       remote: thesofproject
@@ -28,7 +28,7 @@ manifest:
     - name: zephyr
       repo-path: os.rtos.zephyr.zephyr
       path: zephyr
-      revision: cb9cd38aa919705edb586f1e82e3d5409e00cfc1
+      revision: 332b06d80966241281041ebd9376749cd5c61e61
       import:
         name-whitelist:
           - hal_xtensa
@@ -40,7 +40,7 @@ manifest:
     - name: zephyr-intel
       path: zephyr-intel
       repo-path: os.rtos.zephyr.zephyr-intel
-      revision: 8ef0bdf2c420edbb56a0b5ae8db5794a741aa010
+      revision: b90db589117dddaac1570f9302843c383c084f47
 
     - name: hal-intel
       repo-path: os.rtos.zephyr.modules.hal-intel
