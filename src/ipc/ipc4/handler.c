@@ -42,7 +42,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #if CONFIG_ZEPHYR_NATIVE_DRIVERS
-#include <logging/log_backend_adsp_hda.h>
+#include <zephyr/logging/log_backend_adsp_hda.h>
 #endif
 
 LOG_MODULE_DECLARE(ipc, CONFIG_SOF_LOG_LEVEL);
