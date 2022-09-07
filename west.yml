@@ -28,7 +28,7 @@ manifest:
     - name: zephyr
       repo-path: os.rtos.zephyr.zephyr
       path: zephyr
-      revision: 0b6fd79b9fe7ca7ae105ff6d6780cda31d46b551
+      revision: 2de61ecb10c385547e6d10dbad66cbfe151b739c
       import:
         name-whitelist:
           - hal_xtensa
@@ -40,7 +40,7 @@ manifest:
     - name: zephyr-intel
       path: zephyr-intel
       repo-path: os.rtos.zephyr.zephyr-intel
-      revision: 76a11dc00cdb10699b85cea9f373a95234293e4e
+      revision: 70915f4076ded71dea3e881718d4016aaabf034f
 
     - name: hal-intel
       repo-path: os.rtos.zephyr.modules.hal-intel
