@@ -77,6 +77,11 @@ struct sof {
 	/* runtime power management data */
 	struct pm_runtime_data *prd;
 
+#ifdef CONFIG_AMS
+	/* asynchronous messaging service */
+	struct async_message_service *ams;
+#endif
+
 	/* shared notifier data */
 	struct notify_data *notify_data;
 
