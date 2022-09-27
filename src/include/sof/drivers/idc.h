@@ -93,6 +93,10 @@
 #define IDC_MSG_PREPARE_D0ix		IDC_TYPE(0x9)
 #define IDC_MSG_PREPARE_D0ix_EXT	IDC_EXTENSION(0x0)
 
+/** \brief IDC process async msg */
+#define IDC_MSG_AMS	IDC_TYPE(0xA)
+#define IDC_MSG_AMS_EXT	IDC_TYPE(0x0)
+
 /** \brief Decodes IDC message type. */
 #define iTS(x)	(((x) >> IDC_TYPE_SHIFT) & IDC_TYPE_MASK)
 
