@@ -32,6 +32,7 @@
 #include <sof/lib/memory.h>
 #include <sof/lib/mm_heap.h>
 #include <sof/lib/notifier.h>
+#include <sof/lib/ams.h>
 #include <sof/lib/pm_runtime.h>
 #include <rtos/wait.h>
 #include <sof/platform.h>

@@ -15,6 +15,7 @@
 #include <sof/lib/cpu.h>
 #include <sof/lib/memory.h>
 #include <sof/lib/mm_heap.h>
+#include <sof/lib/ams.h>
 #include <sof/lib/notifier.h>
 #include <sof/lib/pm_runtime.h>
 #include <rtos/wait.h>
@@ -158,6 +159,12 @@ int secondary_core_init(struct sof *sof)
 	trace_point(TRACE_BOOT_SYS_NOTIFIER);
 	init_system_notify(sof);
 
+#if CONFIG_AMS
+	err = ams_init();
+	if (err < 0)
+		return err;
+#endif
+
 #ifndef __ZEPHYR__
 	/* interrupts need to be initialized before any usage */
 	trace_point(TRACE_BOOT_PLATFORM_IRQ);
@@ -214,6 +221,10 @@ static int primary_core_init(int argc, char *argv[], struct sof *sof)
 
 	trace_point(TRACE_BOOT_SYS_NOTIFIER);
 	init_system_notify(sof);
+
+#if CONFIG_AMS
+	ams_init();
+#endif
 
 	trace_point(TRACE_BOOT_SYS_POWER);
 	pm_runtime_init(sof);

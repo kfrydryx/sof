@@ -24,3 +24,7 @@ add_local_sources(sof
 	dai.c
 	wait.c
 )
+
+if(CONFIG_AMS)
+add_local_sources(sof ams.c)
+endif()

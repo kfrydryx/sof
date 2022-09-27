@@ -17,6 +17,7 @@
 #include <sof/lib/cpu.h>
 #include <sof/lib/memory.h>
 #include <sof/lib/notifier.h>
+#include <sof/lib/ams.h>
 #include <sof/lib/pm_runtime.h>
 #include <sof/lib/uuid.h>
 #include <sof/platform.h>
@@ -273,6 +274,11 @@ static void idc_prepare_d0ix(void)
 	platform_pm_runtime_prepare_d0ix_en(cpu_get_id());
 }
 
+static void idc_process_async_msg(uint32_t slot)
+{
+	process_incoming_message(slot);
+}
+
 /**
  * \brief Executes IDC message based on type.
  * \param[in,out] msg Pointer to IDC message.
@@ -311,6 +317,9 @@ void idc_cmd(struct idc_msg *msg)
 		break;
 	case iTS(IDC_MSG_PREPARE_D0ix):
 		idc_prepare_d0ix();
+		break;
+	case iTS(IDC_MSG_AMS):
+		idc_process_async_msg(msg->header & 0xFFFF);
 		break;
 	default:
 		tr_err(&idc_tr, "idc_cmd(): invalid msg->header = %u",

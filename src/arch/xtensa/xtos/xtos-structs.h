@@ -53,6 +53,7 @@ struct core_context {
 	struct thread_data td;
 	struct task *main_task;
 	struct schedulers *schedulers;
+	struct async_message_service *ams;
 	struct notify *notify;
 	struct idc *idc;
 };
