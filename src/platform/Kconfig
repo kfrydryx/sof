@@ -159,14 +159,6 @@ config TIGERLAKE
 	help
 	  Select if your target platform is Tigerlake-compatible
 
-
-config METEORLAKE
-	bool "Build for Meteorlake"
-	select ACE
-	select ACE_VERSION_1_5
-	help
-	  Select if your target platform is Meteorlake-compatible
-
 config LIBRARY
 	bool "Build Library"
 	help
@@ -299,7 +291,6 @@ config MAX_CORE_COUNT
 	int
 	default 2 if APOLLOLAKE
 	default 4 if ICELAKE || CANNONLAKE || SUECREEK || TIGERLAKE
-	default 3 if METEORLAKE
 	default 1
 	help
 	  Maximum number of cores per configuration
@@ -382,17 +373,6 @@ config CAVS_VERSION_2_5
 	bool
 	help
 	  Select for CAVS version 2.5
-
-config ACE
-	bool
-	default n
-	select INTEL
-
-config ACE_VERSION_1_5
-	depends on ACE
-	bool
-	help
-	  Select for ACE version 1.5
 
 config CONFIG_CHERRYTRAIL_EXTRA_DW_DMA
 	bool "Support Cherrytrail 3rd DMAC"
