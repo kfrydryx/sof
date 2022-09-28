@@ -37,11 +37,6 @@ manifest:
           - lz4
           - tinycrypt
 
-    - name: hal-intel
-      repo-path: os.rtos.zephyr.modules.hal-intel
-      path: modules/hal/intel
-      revision: da7a7bc3d3ab108430f25465c84acff78a0c2195
-
   self:
     path: sof
     import: submanifests
