@@ -19,7 +19,8 @@
 #include <sof/lib/io.h>
 #include <sof/lib/memory.h>
 #include <sof/lib/shim.h>
-#include <sof/lib/wait.h>
+#include <sof/platform.h>
+#include <rtos/wait.h>
 #include <sof/math/numbers.h>
 
 #include <stdbool.h>

@@ -41,4 +41,6 @@
 #endif
 #endif
 
+#define HW_CFG_VERSION	ACE_VERSION
+
 #endif /* __ACE_VERSION_H__ */

@@ -7,7 +7,7 @@
 //         Rander Wang <rander.wang@intel.com>
 
 #include <ace/version.h>
-#include <sof/drivers/interrupt.h>
+#include <rtos/interrupt.h>
 #include <sof/ipc/driver.h>
 #include <sof/ipc/msg.h>
 #include <sof/ipc/schedule.h>
@@ -15,7 +15,7 @@
 #include <sof/lib/memory.h>
 #include <sof/lib/pm_runtime.h>
 #include <sof/lib/uuid.h>
-#include <sof/lib/wait.h>
+#include <rtos/wait.h>
 #include <sof/list.h>
 #include <sof/platform.h>
 #include <sof/schedule/edf_schedule.h>

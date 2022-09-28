@@ -23,8 +23,8 @@
 
 #if !defined(__ASSEMBLER__) && !defined(LINKER)
 
-#include <sof/drivers/interrupt.h>
-#include <sof/lib/clk.h>
+#include <rtos/interrupt.h>
+#include <rtos/clk.h>
 #include <sof/lib/mailbox.h>
 #include <stddef.h>
 #include <stdint.h>

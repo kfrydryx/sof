@@ -17,13 +17,13 @@
 #include <sof/debug/debug.h>
 #include <sof/drivers/dw-dma.h>
 #include <sof/drivers/idc.h>
-#include <sof/drivers/interrupt.h>
+#include <rtos/interrupt.h>
 #include <sof/ipc/common.h>
-#include <sof/drivers/timer.h>
+#include <rtos/timer.h>
 #include <sof/fw-ready-metadata.h>
 #include <sof/lib/agent.h>
-#include <sof/lib/cache.h>
-#include <sof/lib/clk.h>
+#include <rtos/cache.h>
+#include <rtos/clk.h>
 #include <sof/lib/cpu.h>
 #include <sof/lib/dai.h>
 #include <sof/lib/dma.h>
@@ -33,7 +33,7 @@
 #include <sof/lib/mm_heap.h>
 #include <sof/lib/notifier.h>
 #include <sof/lib/pm_runtime.h>
-#include <sof/lib/wait.h>
+#include <rtos/wait.h>
 #include <sof/platform.h>
 #include <sof/schedule/edf_schedule.h>
 #include <sof/schedule/ll_schedule.h>

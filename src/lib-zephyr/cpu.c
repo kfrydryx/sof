@@ -13,7 +13,7 @@
 #include <sof/init.h>
 #include <sof/lib/cpu.h>
 #include <sof/lib/pm_runtime.h>
-#include <sof/lib/wait.h>
+#include <rtos/wait.h>
 #include <sof/trace/trace.h>
 
 /* Zephyr includes */

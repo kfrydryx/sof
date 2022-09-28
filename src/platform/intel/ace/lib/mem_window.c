@@ -11,7 +11,7 @@
  */
 
 #include <ace/mem_window.h>
-#include <sof/lib/alloc.h>
+#include <rtos/alloc.h>
 #include <sof/lib/io.h>
 #include <sof/lib/shim.h>
 

@@ -8,6 +8,7 @@
 #include <ipc4/pipeline.h>
 #include <ipc4/logging.h>
 #include <sof_versions.h>
+#include <ace/version.h>
 
 LOG_MODULE_REGISTER(basefw, CONFIG_SOF_LOG_LEVEL);
 
