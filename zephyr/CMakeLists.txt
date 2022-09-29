@@ -420,7 +420,7 @@ if (CONFIG_SOC_SERIES_INTEL_CAVS_V25)
 endif()
 
 # Intel ACE 1.5 and newer platforms
-if (CONFIG_SOC_SERIES_INTEL_ACE1X)
+if (CONFIG_SOC_SERIES_INTEL_ACE)
 
 	# Driver sources
 	zephyr_library_sources(

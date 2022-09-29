@@ -28,7 +28,7 @@ manifest:
     - name: zephyr
       repo-path: os.rtos.zephyr.zephyr
       path: zephyr
-      revision: 2de61ecb10c385547e6d10dbad66cbfe151b739c
+      revision: 2bcd366f7960554eccf22e22905faffdac544ef2
       import:
         name-whitelist:
           - hal_xtensa
