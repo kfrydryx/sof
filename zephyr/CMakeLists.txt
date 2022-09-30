@@ -472,12 +472,23 @@ if (CONFIG_SOC_SERIES_INTEL_ACE)
 	zephyr_library_sources(
 		${SOF_PLATFORM_PATH}/intel/ace/platform.c
 		${SOF_PLATFORM_PATH}/intel/ace/lib/mem_window.c
-		${SOF_PLATFORM_PATH}/meteorlake/lib/clk.c
 		${SOF_PLATFORM_PATH}/intel/ace/lib/pm_runtime.c
 		${SOF_PLATFORM_PATH}/intel/ace/lib/pm_memory.c
 		${SOF_PLATFORM_PATH}/intel/ace/lib/clk.c
 		${SOF_PLATFORM_PATH}/intel/ace/lib/dma.c
 	)
+
+	if (CONFIG_SOC_INTEL_ACE15_MTPM)
+		zephyr_library_sources(
+			${SOF_PLATFORM_PATH}/meteorlake/lib/clk.c
+		)
+	endif()
+
+	if (CONFIG_SOC_INTEL_ACE20_LNL)
+		zephyr_library_sources(
+			${SOF_PLATFORM_PATH}/lunarlake/lib/clk.c
+		)
+	endif()
 
 	# SOF core infrastructure - runs on top of Zephyr
 	zephyr_library_sources(
@@ -490,7 +501,11 @@ if (CONFIG_SOC_SERIES_INTEL_ACE)
 
 	set_source_files_properties(${SOF_PLATFORM_PATH}/intel/ace/lps_pic_restore_vector.S PROPERTIES COMPILE_FLAGS -DASSEMBLY)
 
-	set(PLATFORM "meteorlake")
+	if (CONFIG_SOC_INTEL_ACE15_MTPM)
+		set(PLATFORM "meteorlake")
+	elseif(CONFIG_SOC_INTEL_ACE20_LNL)
+		set(PLATFORM "lunarlake")
+	endif()
 	zephyr_include_directories(${SOF_PLATFORM_PATH}/intel/ace/include)
 	zephyr_include_directories(${SOF_PLATFORM_PATH}/intel/cavs/include)
 endif()

@@ -19,12 +19,21 @@
 #include <zephyr/device.h>
 #endif
 
+#if !CONFIG_LUNARLAKE
 #define DMAC0_CLASS 6
 #define DMAC1_CLASS 7
 #define DMAC_HOST_IN_CHANNELS_COUNT 10
 #define DMAC_HOST_OUT_CHANNELS_COUNT 9
 #define DMAC_LINK_IN_CHANNELS_COUNT 10
 #define DMAC_LINK_OUT_CHANNELS_COUNT 9
+#else
+#define DMAC0_CLASS 6
+#define DMAC1_CLASS 7
+#define DMAC_HOST_IN_CHANNELS_COUNT 11
+#define DMAC_HOST_OUT_CHANNELS_COUNT 9
+#define DMAC_LINK_IN_CHANNELS_COUNT 11
+#define DMAC_LINK_OUT_CHANNELS_COUNT 9
+#endif
 
 const struct dw_drv_plat_data dmac0 = {
 	.chan[0] = {
@@ -96,6 +105,7 @@ const struct dw_drv_plat_data dmac1 = {
 	},
 };
 
+#if !CONFIG_LUNARLAKE
 SHARED_DATA struct dma dma[PLATFORM_NUM_DMACS] = {
 {	/* Low Power GP DMAC 0 */
 	.plat_data = {
@@ -177,6 +187,60 @@ SHARED_DATA struct dma dma[PLATFORM_NUM_DMACS] = {
 	},
 	.ops		= &hda_link_dma_ops,
 },};
+
+#else
+
+SHARED_DATA struct dma dma[PLATFORM_NUM_DMACS] = {
+{	/* Host In DMAC */
+	.plat_data = {
+		.id		= DMA_HOST_IN_DMAC,
+		.dir		= DMA_DIR_LMEM_TO_HMEM,
+		.caps		= DMA_CAP_HDA,
+		.devs		= DMA_DEV_HOST,
+		.base		= GTW_HOST_IN_STREAM_BASE(0),
+		.channels	= DMAC_HOST_IN_CHANNELS_COUNT,
+		.chan_size	= GTW_HOST_IN_STREAM_SIZE,
+	},
+	.ops		= &hda_host_dma_ops,
+},
+{	/* Host out DMAC */
+	.plat_data = {
+		.id		= DMA_HOST_OUT_DMAC,
+		.dir		= DMA_DIR_HMEM_TO_LMEM,
+		.caps		= DMA_CAP_HDA,
+		.devs		= DMA_DEV_HOST,
+		.base		= GTW_HOST_OUT_STREAM_BASE(0),
+		.channels	= DMAC_HOST_OUT_CHANNELS_COUNT,
+		.chan_size	= GTW_HOST_OUT_STREAM_SIZE,
+	},
+	.ops		= &hda_host_dma_ops,
+},
+{	/* Link In DMAC */
+	.plat_data = {
+		.id		= DMA_LINK_IN_DMAC,
+		.dir		= DMA_DIR_DEV_TO_MEM,
+		.caps		= DMA_CAP_HDA,
+		.devs		= DMA_DEV_HDA | DMA_DEV_SSP | DMA_DEV_DMIC,
+		.base		= GTW_LINK_IN_STREAM_BASE(0),
+		.channels	= DMAC_LINK_IN_CHANNELS_COUNT,
+		.chan_size	= GTW_LINK_IN_STREAM_SIZE,
+	},
+	.ops		= &hda_link_dma_ops,
+},
+{	/* Link out DMAC */
+	.plat_data = {
+		.id		= DMA_LINK_OUT_DMAC,
+		.dir		= DMA_DIR_MEM_TO_DEV,
+		.caps		= DMA_CAP_HDA,
+		.devs		= DMA_DEV_HDA | DMA_DEV_SSP | DMA_DEV_DMIC,
+		.base		= GTW_LINK_OUT_STREAM_BASE(0),
+		.channels	= DMAC_LINK_OUT_CHANNELS_COUNT,
+		.chan_size	= GTW_LINK_OUT_STREAM_SIZE,
+	},
+	.ops		= &hda_link_dma_ops,
+},};
+
+#endif //#if !CONFIG_LUNARLAKE
 
 const struct dma_info lib_dma = {
 	.dma_array = cache_to_uncache_init((struct dma *)dma),

@@ -22,6 +22,8 @@ elseif(CONFIG_TIGERLAKE)
 	set(platform_folder tigerlake)
 elseif(CONFIG_METEORLAKE)
 	set(platform_folder meteorlake)
+elseif(CONFIG_LUNARLAKE)
+	set(platform_folder lunarlake)
 elseif(CONFIG_IMX8)
 	set(platform_folder imx8)
 elseif(CONFIG_IMX8X)
@@ -561,7 +563,7 @@ list(APPEND UNSIGNED_RI mt8186 mt8195)
 
 # Signed and non-deterministic but sof_ri_info.py is not compatible with
 # manifest v1.5?  "CSE manifest magic number not found"
-set(UNSUPPORTED_RI skl kbl mtl)
+set(UNSUPPORTED_RI skl kbl mtl lnl)
 
 if(${fw_name} IN_LIST UNSIGNED_RI) # mere copy
 	add_custom_command(OUTPUT reproducible.ri

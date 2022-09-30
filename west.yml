@@ -17,7 +17,7 @@ manifest:
     - name: rimage
       repo-path: drivers.audio.firmware.rimage
       path: sof/rimage
-      revision: 6b4848e25d8aaabdf6cd9d402db9a02e5c62ae56
+      revision: bcae3e29d37d78fbdf9c73d429921b384ef138ce
 
     - name: tomlc99
       remote: thesofproject

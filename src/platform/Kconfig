@@ -159,7 +159,6 @@ config TIGERLAKE
 	help
 	  Select if your target platform is Tigerlake-compatible
 
-
 config METEORLAKE
 	bool "Build for Meteorlake"
 	select XT_BOOT_LOADER
@@ -177,6 +176,15 @@ config METEORLAKE
 	select NO_SECONDARY_CORE_ROM
 	help
 	  Select for testing SoF on meteorlake platform.
+
+config LUNARLAKE
+	bool "Build for lunarlake"
+	select MEM_WND
+	select ACE
+	select ACE_VERSION_2_0
+	select NO_SECONDARY_CORE_ROM
+	help
+	  Select for testing SoF on lunarlake platform.
 
 config LIBRARY
 	bool "Build Library"
@@ -310,7 +318,7 @@ config MAX_CORE_COUNT
 	int
 	default 2 if APOLLOLAKE
 	default 3 if METEORLAKE
-	default 4 if ICELAKE || CANNONLAKE || SUECREEK || TIGERLAKE
+	default 4 if ICELAKE || CANNONLAKE || SUECREEK || TIGERLAKE || LUNARLAKE
 	default 1
 	help
 	  Maximum number of cores per configuration
@@ -408,6 +416,12 @@ config ACE_VERSION_1_0
 	bool
 	help
 	  Select for ACE version 1.0
+
+config ACE_VERSION_2_0
+	depends on ACE
+	bool
+	help
+	  Select for ACE version 2.0
 
 config CONFIG_CHERRYTRAIL_EXTRA_DW_DMA
 	bool "Support Cherrytrail 3rd DMAC"

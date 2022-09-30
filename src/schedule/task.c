@@ -55,7 +55,7 @@ enum task_state task_main_primary_core(void *data)
 	while (1) {
 		/* sleep until next IPC or DMA */
 // TODO: To be enabled for MTL
-#if !CONFIG_METEORLAKE
+#if !(CONFIG_METEORLAKE || CONFIG_LUNARLAKE)
 		wait_for_interrupt(0);
 #endif // !CONFIG_METEORLAKE
 

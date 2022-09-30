@@ -354,7 +354,7 @@ int platform_init(struct sof *sof)
 
 	/* Turn off memory for all unused cores */
 	// TODO: to be enabled for MTL
-#if !CONFIG_METEORLAKE
+#if !(CONFIG_METEORLAKE || CONFIG_LUNARLAKE)
 	for (i = 0; i < CONFIG_CORE_COUNT; i++)
 		if (i != PLATFORM_PRIMARY_CORE_ID)
 			pm_runtime_put(CORE_MEMORY_POW, i);
