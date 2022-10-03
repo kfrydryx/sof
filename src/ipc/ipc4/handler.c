@@ -553,101 +553,12 @@ static int ipc4_process_chain_dma(struct ipc4_message_request *ipc4)
 	return ret;
 }
 
-#if CONFIG_ZEPHYR_NATIVE_DRIVERS
-static int ipc4_log_enable(struct ipc4_message_request *ipc4)
-{
-	struct sof_ipc_dma_trace_params_ext params;
-
-	mailbox_hostbox_read(&params, sizeof(params), 0, sizeof(params));
-
-	adsp_hda_log_init(NULL, params.stream_tag - 1);
-
-	return 0;
-}
-#else
-static int ipc4_log_enable(struct ipc4_message_request *ipc4)
-{
-#if CONFIG_HOST_PTABLE
-	struct dma_sg_elem_array elem_array;
-	uint32_t ring_size;
-#endif
-	struct dma_trace_data *dmat = dma_trace_data_get();
-	struct sof_ipc_dma_trace_params_ext params;
-	int err = 0;
-
-	if (!dmat) {
-		mtrace_printf(LOG_LEVEL_ERROR,
-			      "ipc_dma_trace_config failed: dmat not initialized");
-		return -ENOMEM;
-	}
-
-	/* Logs already enabled. */
-	if (dmat->enabled)
-		return 0;
-
-	mailbox_hostbox_read(&params, sizeof(params), 0, sizeof(params));
-
-	/* TODO: header will change in release version.
-	 * There is no point in implemening this in dev.
-	 */
-	/*
-	 *if (iCS(header) == SOF_IPC_TRACE_DMA_PARAMS_EXT)
-	 * As version 5.12 Linux sends the monotonic
-	 *  ktime_get(). Search for
-	 *  "SOF_IPC_TRACE_DMA_PARAMS_EXT" in your particular
-	 *  kernel version.
-	 *
-	 *platform_timer_set_delta(timer, params.timestamp_ns);
-	 *else
-	 *timer->delta = 0;
-	 */
-	dmat->time_delta = k_ns_to_cyc_near64(params.timestamp_ns) - sof_cycle_get_64();
-
-#if CONFIG_HOST_PTABLE
-	err = ipc_process_host_buffer(ipc, &params.buffer,
-				      SOF_IPC_STREAM_CAPTURE,
-				      &elem_array,
-				      &ring_size);
-	if (err < 0)
-		goto error;
-
-	err = dma_trace_host_buffer(dmat, &elem_array, ring_size);
-	if (err < 0) {
-		tr_err(&ipc_tr, "ipc: trace failed to set host buffers %d",
-		       err);
-		goto error;
-	}
-#else
-	/* stream tag of capture stream for DMA trace */
-	dmat->stream_tag = params.stream_tag;
-	/* host buffer size for DMA trace */
-	dmat->host_size = params.buffer.size;
-#endif
-
-err = dma_trace_enable(dmat);
-
-	if (err < 0) {
-		tr_err(&ipc_tr, "ipc: failed to enable trace %d", err);
-		goto error;
-	}
-	return err;
-
-error:
-	return err;
-}
-#endif
-
 static int ipc4_process_glb_message(struct ipc4_message_request *ipc4)
 {
 	uint32_t type;
 	int ret;
 
 	type = ipc4->primary.r.type;
-
-	//Receiving sof style IPC formatted as ACE IPC.
-	//This does not fit any ACE IPC interpretation and will change in the future.
-	if (ipc4->extension.dat == 0xA)
-		return ipc4_log_enable(ipc4);
 
 	switch (type) {
 	case SOF_IPC4_GLB_BOOT_CONFIG:
