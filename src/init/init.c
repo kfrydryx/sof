@@ -239,6 +239,19 @@ static log_timestamp_t default_get_timestamp(void)
 }
 #endif
 
+#include <sof/lib/ams.h>
+
+const uint8_t receiver_uuid[16] = {0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11};
+uint32_t receiver_uuid_id = 0;
+
+__attribute__((optimize("-O0")))
+void receiver_callback(const struct ams_message_payload *const ams_message_payload,
+				    void *ctx)
+{
+	while(1){}
+return;
+}
+
 static int primary_core_init(int argc, char *argv[], struct sof *sof)
 {
 	/* setup context */
@@ -299,6 +312,11 @@ static int primary_core_init(int argc, char *argv[], struct sof *sof)
 #if CONFIG_NO_SECONDARY_CORE_ROM
 	lp_sram_unpack();
 #endif
+	idc_init();
+
+	ams_get_message_type_id(receiver_uuid, &receiver_uuid_id);
+	ams_register_consumer(receiver_uuid_id, 1, 1, &receiver_callback, NULL);
+
 
 	/* should not return, except with Zephyr */
 	return task_main_start(sof);

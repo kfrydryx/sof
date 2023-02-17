@@ -36,6 +36,8 @@
 #include <errno.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <sof/lib/ams.h>
+
 
 static const struct comp_driver comp_copier;
 
@@ -202,6 +204,19 @@ static int create_endpoint_buffer(struct comp_dev *parent_dev,
  * Sof host component can support this case so copier reuses host
  * component to support host gateway.
  */
+__attribute__((optimize("-O0")))
+void callback(const struct ams_message_payload *const ams_message_payload,
+									void *ctx)
+									{
+										// const uint32_t* pld_msg = (uint32_t*)ams_message_payload->message;
+										while(1){}
+									}
+uint8_t vol_msg[4]={0x11, 0x22, 0x33, 0x44};
+const uint8_t am_uuid[16] = {0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11};
+uint32_t am_uuid_id = 0;
+static int mod_id = 4;
+struct ams_message_payload vol_pl;
+
 static int create_host(struct comp_dev *parent_dev, struct copier_data *cd,
 		       struct comp_ipc_config *config,
 		       const struct ipc4_copier_module_cfg *copier_cfg,
@@ -213,7 +228,21 @@ static int create_host(struct comp_dev *parent_dev, struct copier_data *cd,
 	const struct comp_driver *drv;
 	struct comp_dev *dev;
 	int ret;
+	static int done = 0;
+	if(done ==0)
+	{
+	ret = ams_get_message_type_id(am_uuid, &am_uuid_id);
+	ret = ams_register_producer(am_uuid_id, 1, 1);
 
+		vol_pl.message_type_id = am_uuid_id;
+		vol_pl.producer_module_id = 1;
+		vol_pl.producer_instance_id = 1;
+		vol_pl.message_length = 4;
+		vol_pl.message = vol_msg;
+
+	ret = ams_send(&vol_pl);
+	done++;
+	}
 	drv = ipc4_get_drv((uint8_t *)&host);
 	if (!drv)
 		return -EINVAL;
